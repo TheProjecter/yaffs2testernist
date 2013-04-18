@@ -134,7 +134,7 @@ def rmfiles( files ):
 
 #---------------------------------------------------------------------------------------------------------------------------------
 def exec_cmd( cmd ):
-    print cmd
+    #print cmd
     p = subprocess.Popen(cmd, shell=True, stderr=subprocess.STDOUT)
     sts = os.waitpid(p.pid, 0)[1]
     return p

@@ -47,8 +47,8 @@ def getLineCoverage(filename):
         if p0 != '-' and p0 != '#####':
             s += parts[1].strip()
             s += ','
-    print("------------------\n");
-    print(s);
+    #print("------------------\n");
+    #print(s);
     return s
 #--------------------------------------------------------
 class MyDD(DD.DD):
@@ -66,7 +66,7 @@ class MyDD(DD.DD):
         out.write(input)
         out.close()
 
-        print self.coerce(deltas)
+        #print self.coerce(deltas)
 
         if deltas == []:
             return self.PASS
@@ -106,10 +106,11 @@ if __name__ == '__main__':
     index = 1
 
     for line in open(testcaseinput):
-        print ("Line = " + line)
+        #print ("Line = " + line)
         deltas.append((index, line))
         index = index + 1
 
+    myutils.exec_cmd('python yaffs2tester.py --precompile')
     cmd='rm yaffs2.c.gcov yaffs2.gcda funccoverage'
     myutils.exec_cmd(cmd)
     myutils.exec_cmd('yaffs2_gcov -start 0 -num 1 -testcasefile %s'%(testcaseinput))
@@ -122,7 +123,7 @@ if __name__ == '__main__':
     
     print "Simplifying failure-inducing input..."
     c = mydd.ddmin(deltas)              # Invoke DDMIN
-    print "The 1-minimal failure-inducing input is", mydd.coerce(c)
+    #print "The 1-minimal failure-inducing input is", mydd.coerce(c)
     print "Removing any element will make the failure go away."
 
     # Write input to `input.c'
