@@ -1,0 +1,142 @@
+/***********************************************/
+/*  assgnment.5  Shu Z. A00042813 for CS453    */
+/*  using the tokenizer and stream module      */
+/*  print_tokens.c Code                        */
+/***********************************************/
+
+/***********************************************/
+/* NAME:	print_tokens                   */
+/* INPUT:	a filename                     */
+/* OUTPUT:      print out the token stream     */
+/* DESCRIPTION: using the tokenizer interface  */
+/*              to print out the token stream  */
+/***********************************************/
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+#include "tokens.h"
+#define TRUE 1
+#define FALSE 0
+
+main(argc,argv)
+int argc;
+char *argv[3];
+{  char *fname;
+   token tok;
+   token_stream tp;
+     if(argc==1)                  /* if not given filename,take as '""' */
+       {
+        fname= (char *) malloc(sizeof(char));
+        *fname = '\0';
+       }
+     else if(argc==2)
+        fname= argv[1];
+     else
+       { fprintf(stdout, "Error!,please give the token stream\n");
+         exit(0);
+       }
+    tp=open_token_stream(fname);  /* open token stream */
+    tok=get_token(tp);
+    while (is_eof_token(tok) ==FALSE) /* take one token each time until eof */
+    {
+       print_token(tok);
+       tok=get_token(tp);
+    }
+    print_token(tok); /* print eof signal */
+    exit(0);
+}
+
+/* stream.c code */
+
+/***********************************************/
+/* NMAE:	open_character_stream          */
+/* INPUT:       a filename                     */
+/* OUTPUT:      a pointer to chacracter_stream */
+/* DESCRIPTION: when not given a filename,     */
+/*              open stdin,otherwise open      */
+/*              the existed file               */
+/***********************************************/
+character_stream open_character_stream(fname)
+char *fname;
+{ character_stream fp;
+  if(fname == NULL)
+     fp=stdin;
+  else if ((fp=fopen(fname,"r"))== NULL)
+  {
+       fprintf(stdout, "The file %s doesn't exists\n",fname);
+       exit(0);
+  }
+  return(fp);
+}
+
+/**********************************************/
+/* NAME:	get_char                      */
+/* INPUT:       a pointer to char_stream      */
+/* OUTPUT:      a character                   */
+/**********************************************/
+char get_char(fp)
+character_stream fp;
+{ char ch;
+  ch=getc(fp);
+  return(ch);
+}
+
+/***************************************************/
+/* NAME:      unget_char                           */
+/* INPUT:     a pointer to char_stream,a character */
+/* OUTPUT:    a character                          */
+/* DESCRIPTION:when unable to put back,return EOF  */
+/***************************************************/
+char unget_char(ch,fp)
+character_stream fp;
+char ch;
+{ char c;
+  c=ungetc(ch,fp);
+  if(c ==EOF)
+    {
+     return(c);
+    }
+  else
+     return(c);
+}
+
+/* tokenizer.c code */
+
+
+char buffer[81];  /* fixed array length MONI */ /* to store the token temporar */
+
+
+static int is_spec_symbol();
+static int is_token_end();
+static unget_error();
+static int is_keyword();
+static int is_identifier();
+static int is_num_constant();
+static int is_char_constant();
+static int is_str_constant();
+static int is_comment();
+static void print_spec_symbol();
+
+/********************************************************/
+/* NAME:	open_token_stream                       */
+/* INPUT:       a filename                              */
+/* OUTPUT:      a pointer to a token_stream             */
+/* DESCRIPTION: when filename is EMPTY,choice standard  */
+/*              input device as input source            */
+/********************************************************/
+token_stream open_token_stream(fname)
+char *fname;
+{
+ token_stream fp;
+ if(strcmp(fname,"")==0)
+    fp=open_character_stream(NULL);
+ else
+    fp=open_character_stream(fname);
+ return(fp);
+}
+
+/********************************************************/
+/* NAME :	get_token                               */
+/* INPUT: 	a pointer to the tokens_stream          */
+/* OUTPUT:      a token                                 */
+/* DESCRIPTION: according the 
