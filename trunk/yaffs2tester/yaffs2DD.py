@@ -41,12 +41,17 @@ def getLineCoverage(filename):
     lines = f.readlines()
     f.close()
     for line in lines:
-        parts=line.split(':')
-        p0 = parts[0]
-        p0=p0.strip()
-        if p0 != '-' and p0 != '#####':
-            s += parts[1].strip()
-            s += ','
+        newline=line.strip()
+        if len(newline) > 0:
+            if newline[0] != '-' and newline[0] != '#'
+                s+=newline.split(':')[1].strip()
+                s+=','
+        #parts=line.split(':')
+        #p0 = parts[0]
+        #p0=p0.strip()
+        #if p0 != '-' and p0 != '#####':
+        #    s += parts[1].strip()
+        #    s += ','
     #print("------------------\n");
     #print(s);
     return s
