@@ -1814,8 +1814,8 @@ void gen_testers(FILE* fp, int numcases, int length, const char* strategy, const
 int main(int argc, char* argv[]) {
     /* parse command line options */
 
-    TCLAP::CmdLine cmd("YAFFS2 test case generator", ' ', "0.99");
-
+    TCLAP::CmdLine* p= new TCLAP::CmdLine("YAFFS2 test case generator", ' ', "0.99");
+    TCLAP::CmdLine* cmd = *p;
     TCLAP::ValueArg<int>    argRandseed("", "randseed", "seed for random generator", true, 0, "int");
     TCLAP::ValueArg<int>    argStartIdx("", "startidx", "start index of test cases", true, 0, "int");
     TCLAP::ValueArg<int>    argEndIdx("", "endidx", "end index of test cases", true, 99, "int");
