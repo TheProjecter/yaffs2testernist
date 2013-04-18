@@ -72,7 +72,7 @@ class MyDD(DD.DD):
             return self.PASS
 
         # Invoke yaffs2
-        cmd='rm yaffs2.c.gcov yaffs2.gcda funccoverage'
+        cmd='rm *.gcov *.gcda funccoverage'
         myutils.exec_cmd(cmd)
         cmd='yaffs2_gcov -start 0 -num 1 -testcasefile %s'%(newinput)
         myutils.exec_cmd(cmd)
@@ -111,7 +111,7 @@ if __name__ == '__main__':
         index = index + 1
 
     myutils.exec_cmd('python yaffs2tester.py --precompile')
-    cmd='rm yaffs2.c.gcov yaffs2.gcda funccoverage'
+    cmd='rm *.gcov *.gcda funccoverage'
     myutils.exec_cmd(cmd)
     myutils.exec_cmd('yaffs2_gcov -start 0 -num 1 -testcasefile %s'%(testcaseinput))
     myutils.exec_cmd('gcov -f yaffs2.c > funccoverage')
