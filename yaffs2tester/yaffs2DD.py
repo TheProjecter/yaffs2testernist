@@ -43,7 +43,7 @@ def getLineCoverage(filename):
     for line in lines:
         newline=line.strip()
         if len(newline) > 0:
-            if newline[0] != '-' and newline[0] != '#'
+            if newline[0] != '-' and newline[0] != '#':
                 s+=newline.split(':')[1].strip()
                 s+=','
         #parts=line.split(':')
