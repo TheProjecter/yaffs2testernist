@@ -1887,7 +1887,7 @@ int main(int argc, char* argv[]) {
 #endif
 
     for(int i = startidx; i <= endidx /* yes less than or equal */; i++ ) {
-        char filename[64];
+        char filename[1024];
         sprintf(filename, "%s/ts%06d.c", dir, i);
         FILE* fp = fopen(filename, "w+");
         if( fp ) {
