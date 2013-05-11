@@ -91,12 +91,15 @@ def main():
     else:
         assert(0)        
     os.chdir(G_ROOT_FOLDER)
+    myutils.exec_cmd('rm yaffs2_oracle yaffs2_mutant')
     myutils.exec_cmd('gcc -o yaffs2_oracle yaffs2/yaffs2.c testcaserunner.cpp -DNO_COVERAGE %s %s -lstdc++ -ldl'\
                             %(YAFFS2_COMPILE_OPTIONS, OPTIMIZATION))
                             
     myutils.exec_cmd('gcc -o yaffs2_mutant muyaffs2.c testcaserunner.cpp -DNO_COVERAGE %s %s -lstdc++ -ldl'\
                             %(YAFFS2_COMPILE_OPTIONS, OPTIMIZATION))
    
+    if not( os.path.exists('yaffs2_oracle') and os.path.exists('yaffs2_mutant')):
+        return
     testcasefiles=glob.glob('%s/ts*.c'%(options.testcasesdir))
     testcasefiles.sort()
     myutils.exec_cmd('rm oracle_results.txt mutant_results.txt')
